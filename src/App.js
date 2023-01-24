@@ -3,12 +3,12 @@ import SingleCard from './components/SingleCard';
 import './App.css';
 
 const cardImages = [
-  { "src": "/img/helmet.png" },
-  { "src": "/img/potion.png" },
-  { "src": "/img/ring.png" },
-  { "src": "/img/scroll.png" },
-  { "src": "/img/shield.png" },
-  { "src": "/img/sword.png" }
+  { "src": "/img/helmet.png", matched: false },
+  { "src": "/img/potion.png", matched: false },
+  { "src": "/img/ring.png", matched: false },
+  { "src": "/img/scroll.png", matched: false },
+  { "src": "/img/shield.png", matched: false },
+  { "src": "/img/sword.png", matched: false }
 ]
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
       if (choiceOne.src === choiceTwo.src) {
         setCards(prevCards => {
           return prevCards.map(card => {
-            if (card.src == choiceOne) {
+            if (card.src === choiceOne.src) {
               return { ...card, matched: true }
             }
             else {
@@ -47,11 +47,12 @@ function App() {
         resetTurn()
       }
       else {
-
         resetTurn()
       }
     }
   }, [choiceOne, choiceTwo])
+
+  console.log(cards)
 
   const resetTurn = () => {
     setChoiceOne(null)
@@ -66,7 +67,7 @@ function App() {
 
       <div className="card-grid">
         {cards.map(card => (
-          <SingleCard key={card.key} card={card} handleChoice={handleChoice} />
+          <SingleCard key={card.key} card={card} handleChoice={handleChoice} flipped={card===choiceOne || card===choiceTwo || card.matched}/>
         ))}
       </div>
     </div>
